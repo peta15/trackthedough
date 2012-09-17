@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html manifest="/cache.manifest">
+<head>
+<title>Track The Dough</title>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />
+	<link rel="stylesheet" href="ttd.css" />
+	<script type="text/javascript" charset="utf-8" src="phonegap.0.9.5.min.js"></script>
+	<script src="libs/jquery-1.6.min.js"></script><!-- http://code.jquery.com/jquery-1.6.min.js -->
+	<script src="libs/jquery.dst.js"></script><!-- http://plugins.jquery.com/project/DSt -->
+	<script src="libs/jquery.json-2.2.min.js"></script><!-- http://code.google.com/p/jquery-json/ -->
+	<script src="libs/jquery.tmpl.min.js"></script><!-- http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js -->
+	<!-- <script src="libs/jquery.maskedinput-1.3.min.js"></script> --><!-- http://digitalbush.com/projects/masked-input-plugin/ -->
+	<script src="libs/underscore-min.js"></script><!-- http://documentcloud.github.com/underscore/ -->
+	<script src="libs/underscore.string.min.js"></script><!-- https://github.com/edtsech/underscore.string -->
+	<script src="ttd.js"></script>
+	<!-- <script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script> -->
+	<!-- <script src="libs/jquery.mobile-test.js"></script>--><!-- latest TEST version -->
+	<script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script><!-- http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js -->
+	
+	<!-- hide browser toolbars -->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- Change this if you want to allow scaling -->
+    <meta name="viewport" content="width=default-width; user-scalable=no" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <!-- iphone app icon -->
+    <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png"/>
+    
+</head>
+<body onload="onBodyLoad()">
+
+	<!-- eventTypePage -->
+	<div data-role="page" data-theme="b" id="eventTypePage">
+
+		<div data-role="header" data-backbtn="false">
+			<h1>New Expense</h1>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<!-- TODO add icons -->
+			<ul data-role="listview" data-theme="g">
+				<li id="eventType-groupExpense"><a href="#selectGroupUsersPage">
+					<h3>Group Expense</h3>
+					<p>Split the bill with roommates, with friends when eating out, or on a trip.</p>
+				</a></li>
+				<li id="eventType-personalExpense"><a href="#fillExpensePage">
+					<h3>Personal Expense</h3>
+					<p>Track personal expenses.  Great for recording where your cash went.</p>
+				</a></li>
+				<li id="eventType-transfer"><a href="#addUsersPage">
+					<h3>Transfer, Lend, Borrow</h3>
+					<p>Record transfers of money between you and another person or a group of people.</p>
+				</a></li>
+				<li id="eventType-business"><a href="#">
+					<h3>Business Expense</h3>
+					<p><i>Coming Soon!</i> Expense items to your business.</p>
+				</a></li>
+				<li><a href="http://www.trackthedough.com">
+					<h3>Tutorial</h3>
+					<p>See the video at the bottom</p>
+				</a></li>
+			</ul>
+
+		</div>
+		<!-- /content -->
+
+		<div data-role="footer" class="nav-footer-ttd">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventTypePage" data-icon="ttd-newexpense" class="ui-btn-active">New</a>
+					</li>
+					<li><a href="#eventHistoryPage" data-icon="ttd-history">History</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settle">Settle</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settings">Options</a>
+					</li>
+					<li><a href="#" data-icon="ttd-location">Map</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+
+	<!-- selectGroupUsersPage -->
+	<div data-role="page" data-theme="b" id="selectGroupUsersPage">
+
+		<div data-role="header">
+			<a href="#" data-rel="back" data-icon="arrow-l">Back</a>
+			<h1>Group Expense</h1>
+			<a href="#eventTypePage" data-icon="home" data-iconpos="notext" data-direction="reverse"></a>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<p class="center">Select who is involved in this group expense</p>
+			
+			<a href="#addUsersPage" data-role="button">A New Group</a>
+
+			<p class="center">OR Select Previous Group</p>
+
+			<ul id="previousGroupUsers" data-role="listview" data-theme="g" data-inset="true">
+				<!-- groups dynamically inserted here -->
+			</ul>
+
+		</div>
+		<!-- /content -->
+
+		<div data-role="footer" class="nav-footer-ttd">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventTypePage" data-icon="ttd-newexpense" class="ui-btn-active">New</a>
+					</li>
+					<li><a href="#eventHistoryPage" data-icon="ttd-history">History</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settle">Settle</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settings">Options</a>
+					</li>
+					<li><a href="#" data-icon="ttd-location">Map</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+	
+	<!-- fillExpensePage -->
+	<div data-role="page" data-theme="b" id="fillExpensePage">
+
+		<div data-role="header">
+			<a href="#" data-rel="back" data-icon="arrow-l">Back</a>
+			<h1>Expense Info</h1>
+			<a href="#eventTypePage" data-icon="home" data-iconpos="notext" data-direction="reverse"></a>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<form id="fillExpenseForm">
+				<div class="left newExp1">
+					<select name="totalType" id="totalType">
+						<option value="subtotal" selected="selected">Subtotal</option>
+						<option value="total">Total</option>
+						<option value="totalTip">Total w/ Tip</option>
+					</select>
+				</div>
+				<div class="left newExp2">
+					$
+				</div>
+				<div class="right newExp3">
+					<input type="number" name="total" id="total" value="" class="currency" />
+				</div>
+				<!-- hidden until implemented
+				<div data-role="fieldcontain">
+					<p class="center">- OR -</p>
+					<a href="#" data-role="button" data-icon="search" disabled="disabled">Itemize</a>
+				</div>
+				-->
+				<div data-role="fieldcontain">
+					<label for="includeTip">Giving a Tip?</label>
+					<select name="includeTip" id="includeTip" data-role="slider">
+						<option value="1">Yes</option>
+						<option value="0">No</option>
+					</select>
+			    	<div class="ui-grid-a">
+			    		<div class="ui-block-a">
+				    		<div class="ui-grid-a ui-grid-a-custom">
+				    			<div class="ui-block-a">
+			    					<label for="tipType" class="select">Tip</label>
+				    			</div>
+				    			<div class="ui-block-b">
+									<select name="tipType" id="tipType">
+										<option value="percent">%</option>
+										<option value="value">$</option>
+									</select>
+								</div>
+			    			</div>
+			    		</div>
+			    		<div class="ui-block-b">
+			    			<label for="tip"></label>
+			    			<input type="number" name="tip" id="tip" value="15" class="currency" />
+			    		</div>
+		    		</div>
+				</div>
+		   		<div data-role="fieldcontain">
+					<a href="#editExpensePage" data-role="button" data-icon="check" class="submit">Done</a>
+				</div>
+				<!-- hidden until implemented
+				<p>Optional</p>
+				<div class="ui-grid-a button-icon-ttd">
+					<div class="ui-block-a">
+						<a href="#addUsersPage" data-role="button" data-icon="ttd-receipt" data-iconpos="top">Receipt</a>
+					</div>
+					<div class="ui-block-b">
+						<a href="#" data-role="button" data-icon="ttd-location" data-iconpos="top">Location</a>
+					</div>
+				</div>
+				-->
+			</form>
+		</div>
+		<!-- /content -->
+
+		<div data-role="footer" class="nav-footer-ttd">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventTypePage" data-icon="ttd-newexpense" class="ui-btn-active">New</a>
+					</li>
+					<li><a href="#eventHistoryPage" data-icon="ttd-history">History</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settle">Settle</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settings">Options</a>
+					</li>
+					<li><a href="#" data-icon="ttd-location">Map</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+
+	<!-- editExpensePage -->
+	<div data-role="page" data-theme="b" id="editExpensePage">
+
+		<div data-role="header" data-position="inline">
+			<a href="#" data-rel="back" data-icon="arrow-l">Back</a>
+			<h1>Edit Expense</h1>
+			<a href="#eventTypePage" data-icon="home" data-iconpos="notext" data-direction="reverse"></a>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<div id="editGroupExpense">
+				<p>Select who is paying and then review and correct the expense if necessary.</p>
+				<div class="ui-grid-c expenseGridHdr">
+					<div class="ui-block-a">
+						<h4>Friend</h4>
+					</div>
+					<div class="ui-block-b">
+						<h4>Owes</h4>
+						<a class="subtext" href="#">[w/o tax & tip]</a>
+					</div>
+					<div class="ui-block-c">
+						<h4>Paying</h4>
+						<a class="subtext" href="#">[w/ tax & tip]</a>
+					</div>
+					<div class="ui-block-d">
+						<a href="#manualPaymentAmountsPage" id="manualPaymentAmountsLink" data-icon="grid" data-iconpos="notext" data-role="button" data-theme="c" style="margin: 0" data-rel="dialog" data-transition="slidedown"></a>
+					</div>
+				</div>
+				<div class="ui-grid-b" id="expenseGridUsers">
+					<!-- users dynamically inserted here -->
+			   		<!-- pay/owes errors inserted here -->
+				</div>
+			</div>
+			<div id="editPersonalExpense">
+				<p>Review and correct the expense if necessary.</p>
+			</div>
+			<div class="ui-grid-c expenseGridTotals" id="expenseGridTotals">
+				<div class="ui-block-a"></div>
+				<div class="ui-block-b"></div>
+				<div class="ui-block-c">
+					<label for="subtotal">SubTotal $</label>
+				</div>
+				<div class="ui-block-d">
+				    <input type="number" name="subtotal" id="subtotal" value="18" class="currency" />
+				</div>
+				<div class="ui-block-a">
+					<p class="right">%</p>
+				</div>
+				<div class="ui-block-b">
+					<input type="number" name="taxPercent" id="taxPercent" value="8" class="currency0" />
+				</div>
+				<div class="ui-block-c">
+					<label for="taxValue">Tax $</label>
+				</div>
+				<div class="ui-block-d">
+			    	<input type="number" name="taxValue" id="taxValue" value="2" class="currency" />
+				</div>
+				<div class="ui-block-a">
+					<p class="right">%</p>
+					<!-- <input type="checkbox" name="includeTip" id="includeTip" value="1" data-role="none" /> -->
+				</div>
+				<div class="ui-block-b">
+					<input type="number" name="tipPercent" id="tipPercent" value="20" class="currency0" />
+				</div>
+				<div class="ui-block-c">
+					<label for="tipValue">Tip $</label>
+				</div>
+				<div class="ui-block-d">
+			    	<input type="number" name="tipValue" id="tipValue" value="4" class="currency" />
+				</div>
+			</div><!-- /grid-c -->
+			<div class="ui-grid-c expenseGridTotals">
+				<div class="ui-block-a"></div>
+				<div class="ui-block-b"></div>
+				<div class="ui-block-c">
+					<label for="total"><h4>Total $</h4></label>
+				</div>
+				<div class="ui-block-d">
+					<input type="number" name="total" id="total" value="24" class="currency" />
+				</div>
+			</div><!-- /grid-c -->
+			<a href="#eventHistoryPage" data-role="button" data-icon="check" class="submit">Submit Expense</a>
+			<!-- we are not going to add/delete users for this version (you can just press back and recreate).  also location is specified on previous page
+			<div class="ui-grid-a button-icon-ttd">
+				<div class="ui-block-a">
+					<a href="#addUsersPage" data-role="button" data-icon="ttd-addusers" data-iconpos="top">Add Users</a>
+				</div>
+				<div class="ui-block-b">
+					<a href="#" data-role="button" data-icon="ttd-location" data-iconpos="top">Location</a>
+				</div>
+			</div>
+			 -->
+			<label for="textarea">Notes:</label>
+			<textarea cols="40" rows="8" name="notes" id="notes"></textarea>
+		</div>
+		<!-- /content -->
+
+		<div data-role="footer" class="nav-footer-ttd">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventTypePage" data-icon="ttd-newexpense" class="ui-btn-active">New</a>
+					</li>
+					<li><a href="#eventHistoryPage" data-icon="ttd-history">History</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settle">Settle</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settings">Options</a>
+					</li>
+					<li><a href="#" data-icon="ttd-location">Map</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+
+	<!-- addUsersPage -->
+	<div data-role="page" data-theme="b" id="addUsersPage">
+
+		<div data-role="header" data-position="inline">
+			<a href="#" data-rel="back" data-icon="arrow-l">Back</a>
+			<h1>Add Friends</h1>
+			<a href="#eventTypePage" data-icon="home" data-iconpos="notext" data-direction="reverse"></a>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<!-- hidden until implemented
+			<a href="#" data-role="button">Bump</a>
+			-->
+			<a href="#" data-role="button" data-icon="check" class="submit">Done</a>
+			<p class="center">Select Friends to Add</p>
+			<ul data-role="listview" data-theme="g" data-filter="true" data-inset="true" class="checkBoxList" id="addUsersList">
+				<!-- contacts in alphabetical order dynamically inserted here -->
+			</ul>
+			<a href="#" data-role="button" data-icon="check" class="submit">Done</a>
+			<!-- hidden until implemented
+			<div class="ui-grid-a button-icon-ttd">
+				<div class="ui-block-a">
+					<a href="#" data-role="button" data-icon="ttd-adduser" data-iconpos="top">Add Contact</a>
+				</div>
+				<div class="ui-block-b">
+					<a href="#" data-role="button" data-icon="ttd-sync" data-iconpos="top">Sync Gmail</a>
+				</div>
+			</div>
+			-->
+		</div>
+		<!-- /content -->
+
+		<div data-role="footer" class="nav-footer-ttd">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventTypePage" data-icon="ttd-newexpense" class="ui-btn-active">New</a>
+					</li>
+					<li><a href="#eventHistoryPage" data-icon="ttd-history">History</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settle">Settle</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settings">Options</a>
+					</li>
+					<li><a href="#" data-icon="ttd-location">Map</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+	
+	<div data-role="page" data-theme="b" id="manualPaymentAmountsPage">
+
+		<div data-role="header" data-position="inline">
+			<h1>Adjust Pay</h1>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<form id="adjustPayTable">
+				<!-- contacts and paying fields dynamically inserted here  -->
+	    	</form>
+	    	<a href="#editExpensePage" data-icon="check" data-role="button" class="submit">Done</a>
+		</div>
+		<!-- /content -->
+
+		<div data-role="footer" class="nav-footer-ttd">
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+ 
+ 	<!-- eventHistoryPage -->
+	<div data-role="page" data-theme="b" id="eventHistoryPage">
+
+		<div data-role="header" data-backbtn="false">
+			<a href="#" data-rel="back" data-icon="arrow-l">Back</a>
+			<h1>Expense History</h1>
+			<a href="#eventTypePage" data-icon="home" data-iconpos="notext" data-direction="reverse"></a>
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventHistoryPage" class="ui-btn-active">Events</a>
+					</li>
+					<li><a href="#userHistoryPage">Users</a>
+					</li>
+					<li><a href="#">Export</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<ul id="eventHistory" data-role="listview" data-filter="true" data-theme="g" data-inset="true">
+				<!-- events dynamically inserted here -->
+			</ul>
+			<a data-role="button" data-icon="delete" class="deleteHistory submit">Delete History</a>
+		</div>
+		<!-- /content -->
+		
+		<div data-role="footer" class="nav-footer-ttd">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventTypePage" data-icon="ttd-newexpense">New</a>
+					</li>
+					<li><a href="#eventHistoryPage" data-icon="ttd-history" class="ui-btn-active">History</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settle">Settle</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settings">Options</a>
+					</li>
+					<li><a href="#" data-icon="ttd-location">Map</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+	
+ 	<!-- userHistoryPage -->
+	<div data-role="page" data-theme="b" id="userHistoryPage">
+
+		<div data-role="header" data-backbtn="false">
+			<a href="#" data-rel="back" data-icon="arrow-l">Back</a>
+			<h1>User History</h1>
+			<a href="#eventTypePage" data-icon="home" data-iconpos="notext" data-direction="reverse"></a>
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventHistoryPage">Events</a>
+					</li>
+					<li><a href="#userHistoryPage" class="ui-btn-active">Users</a>
+					</li>
+					<li><a href="#">Export</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<h3>User<span class="right">Owes/Owed</span></h3>
+			<ul data-role="listview" id="userHistory" data-theme="g" data-inset="true">
+				<!-- users dynamically inserted here -->
+			</ul>
+			<a data-role="button" data-icon="delete" class="deleteHistory submit">Delete History</a>
+		</div>
+		<!-- /content -->
+		
+		<div data-role="footer" class="nav-footer-ttd">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventTypePage" data-icon="ttd-newexpense">New</a>
+					</li>
+					<li><a href="#eventHistoryPage" data-icon="ttd-history" class="ui-btn-active">History</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settle">Settle</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settings">Options</a>
+					</li>
+					<li><a href="#" data-icon="ttd-location">Map</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+
+	<!-- transferPage -->
+	<div data-role="page" data-theme="b" id="transferPage">
+
+		<div data-role="header">
+			<a href="#" data-rel="back" data-icon="arrow-l">Back</a>
+			<h1>Tansfer</h1>
+			<a href="#eventTypePage" data-icon="home" data-iconpos="notext" data-direction="reverse"></a>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<form id="transferForm">
+				<!-- transfer form rows dynamically inserted here -->
+    		</form>
+	   		<div data-role="fieldcontain">
+				<a href="#eventHistoryPage" data-role="button" data-icon="check" class="submit">Done</a>
+			</div>
+			<label for="textarea">Notes:</label>
+			<textarea cols="40" rows="8" name="notes" id="notes"></textarea>
+		</div>
+		<!-- /content -->
+
+		<div data-role="footer" class="nav-footer-ttd">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#eventTypePage" data-icon="ttd-newexpense" class="ui-btn-active">New</a>
+					</li>
+					<li><a href="#eventHistoryPage" data-icon="ttd-history">History</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settle">Settle</a>
+					</li>
+					<li><a href="#" data-icon="ttd-settings">Options</a>
+					</li>
+					<li><a href="#" data-icon="ttd-location">Map</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /footer -->
+	</div>
+	<!-- /page -->
+
+	<!-- Jquery templates -->
+	<script id="editExpenseUserTemplate" type="text/x-jquery-tmpl">
+		<div class="ui-block-a">
+			<div class="ui-bar ui-bar-c expenseGrid">
+				<p>${name}</p>
+			</div>
+		</div>
+		<div class="ui-block-b">
+			<div class="ui-bar ui-bar-c expenseGrid">
+				<label for="owes-${i}">$</label>
+			    <input type="number" name="owes-${i}" id="owes-${i}" value="${owes}" class="currency" />
+			</div>
+		</div>
+		<div class="ui-block-c">
+			<div class="ui-bar ui-bar-c expenseGrid">
+				<input type="checkbox" name="paying-${i}" id="paying-${i}" class="custom" {{if payingChecked}}checked="checked"{{/if}} />
+				<label for="paying-${i}">${paying}</label>
+			</div>
+		</div>
+	</script>
+	<script id="addUsersListTemplate" type="text/x-jquery-tmpl">
+		{{if newLetter}}
+		<li data-role="list-divider" role="heading">${letter}</li>
+		{{/if}}
+		<li data-theme="c">
+			<fieldset data-role="controlgroup">
+					<input type="checkbox" name="user-${i}" id="user-${i}" value="${name}" class="custom" />
+					<label for="user-${i}">${name}</label>
+			</fieldset>
+		</li>
+	</script>
+	<script id="editExpenseOwesPayingErrorTemplate" type="text/x-jquery-tmpl">
+		<div class="ui-block-a owepaywarn">
+		</div>
+		<div class="ui-block-b owepaywarn">
+			<p class="subtext red center">${owesWarning}</p>
+		</div>
+		<div class="ui-block-c owepaywarn">
+			<p class="subtext red center">${payingWarning}</p>
+		</div>
+	</script>
+	<script id="eventHistoryTemplate" type="text/x-jquery-tmpl">
+		<li data-role="list-divider">${date}<span class="right">${total}</span></li>
+		<li id="event-${i}">
+			<a href="${linkToPage}">
+			<p class="italic">${type}</p>
+			{{if users}}<p>${users}</p>{{/if}}
+			<p>${location}</p>
+		</a></li>
+	</script>
+	<script id="previousGroupUsersTemplate" type="text/x-jquery-tmpl">
+		<li id="groupusers-${i}">
+			<a href="#fillExpensePage"><h3>${users}</h3><p>${date}</p></a>
+		</li>
+	</script>
+	<script id="adjustPayTableTemplate" type="text/x-jquery-tmpl">
+		<label for="name">${name} $</label>
+		<input type="number" name="adjustpay-${i}" id="adjustpay-${i}" value="${value}"  />
+	</script>
+	<script id="userHistoryTemplate" type="text/x-jquery-tmpl">
+		<li id="userHistory-${i}" class="filter"><a href="#eventHistoryPage">
+			<h3>${name}</h3>
+			<h3 class="ui-li-aside ${color}">${balance}</h3>
+		</a></li>
+	</script>
+	<script id="transferTemplate" type="text/x-jquery-tmpl">
+		<div data-role="fieldcontain">
+			<label for="transferDirection">${name} is</label>
+			<select name="transferDirection-${i}" id="transferDirection-${i}" data-role="slider">
+				<option value="1" ${selectPay}>paying me</option>
+				<option value="-1" ${selectRec}>receiving from me</option>
+			</select>
+			<div>
+				<label for="transferAmount" class="dollarSign">$</label>
+   		 		<input type="number" name="transferAmount-${i}" id="transferAmount-${i}" value="${amount}" class="currency dollarInput" />
+			</div>
+		</div>
+	</script>
+ 
+</body>
+</html>

@@ -1,0 +1,155 @@
+@CHARSET "ISO-8859-1";
+
+.center {
+	text-align: center;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.hidden {
+	display: none;
+}
+.italic {
+	font-style: italic;
+}
+
+/* icons from http://glyphish.com/ */
+
+.nav-footer-ttd .ui-btn .ui-btn-inner { padding-top: 40px !important; }
+.nav-footer-ttd .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: none !important; border-radius: none !important; }
+.ui-icon-ttd-receipt { background: url(ttdicons/172-pricetag.png) 50% 50% no-repeat; background-size: 28px 23px; }
+.ui-icon-ttd-history { background: url(ttdicons/83-calendar.png) 50% 50% no-repeat; background-size: 23px 25px; }
+.ui-icon-ttd-settle { background: url(ttdicons/138-scales.png) 50% 50% no-repeat; background-size: 26px 20px; }
+.ui-icon-ttd-settings { background: url(ttdicons/106-sliders.png) 50% 50% no-repeat; background-size: 24px 24px; }
+.ui-icon-ttd-newexpense { background: url(ttdicons/10-medical.png) 50% 50% no-repeat; background-size: 22px 22px; }
+
+.button-icon-ttd .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: none !important; border-radius: none !important; }
+.button-icon-ttd .ui-btn-text { font-size: 12px !important; }
+.ui-icon-ttd-addusers { background: url(ttdicons/112-group.png) 50% 50% no-repeat; background-size: 32px 21px; }
+.ui-icon-ttd-location { background: url(ttdicons/103-map.png) 50% 50% no-repeat; background-size: 26px 21px; }
+.ui-icon-ttd-sync { background: url(ttdicons/02-redo.png) 50% 50% no-repeat; background-size: 30px 26px; }
+.ui-icon-ttd-adduser { background: url(ttdicons/111-user.png) 50% 50% no-repeat; background-size: 24px 21px; }
+
+div.expenseGrid {
+	height: 40px;
+	padding: 0.4em 0.2em;
+}
+.ui-block-a div.expenseGrid {
+	padding-left: 0.4em;
+}
+div.expenseGrid p {
+	margin: 0;
+}
+div.expenseGrid input.ui-input-text {
+	width: 70%;
+	display: inline;
+}
+
+div.expenseGrid label.ui-input-text {
+	display: inline;
+}
+
+div.expenseGridHdr .ui-block-a {
+	width: 33%;
+}
+div.expenseGridHdr .ui-block-b {
+	width: 33%;
+}
+div.expenseGridHdr .ui-block-c {
+	width: 25%;
+}
+div.expenseGridHdr .ui-block-d {
+	width: 8%;
+}
+div.expenseGridHdr h4 {
+	margin: 0;
+}
+
+div.expenseGridTotals {
+	border-top: 1px solid black;
+	padding-top: .2em;
+}
+div.expenseGridTotals h4 {
+	margin: .3em 0;
+}
+div.expenseGridTotals input.ui-input-text {
+	width: 80%;
+	margin: .3em;
+}
+div.expenseGridTotals p {
+	color: grey;
+	font-weight: bold;
+	font-size: small;
+	margin-top: .1em;
+}
+div.expenseGridTotals .ui-block-c label {
+	text-align: right;
+	margin-right: 5px;
+	margin-top: 5px;
+}
+div.expenseGridTotals .ui-block-a { width: 20%; }
+div.expenseGridTotals .ui-block-b { width: 20%; }
+div.expenseGridTotals .ui-block-c { width: 30%; }
+div.expenseGridTotals .ui-block-d { width: 30%; }
+
+ul.checkBoxList .ui-li-static.ui-li {
+	padding: 0;
+}
+ul.checkBoxList fieldset.ui-controlgroup {
+	margin: 0;
+}
+
+div.inputError input.ui-input-text, div.inputError label.ui-btn {
+	border-color: red;
+}
+
+.ui-grid-a-custom .ui-block-a {
+	width: 25% !important;
+}
+
+.ui-grid-a-custom .ui-block-b {
+	width: 75% !important;
+}
+
+.subtext {
+	font-size: x-small;
+}
+
+.green {
+	color: green;
+}
+.red {
+	color: red;
+}
+.blue {
+	color: blue;
+}
+.orange {
+	color: orange;
+}
+
+div.newExp1 {
+	 margin-top: .5em;
+}
+div.newExp2 {
+	margin-top: 1.6em;
+	margin-left: .8em;
+}
+div.newExp3 {
+	width: 35%;
+	margin-top: 1.4em;
+	margin-right: 10px;
+}
+.dollarSign {
+	display: inline;
+}
+.dollarInput {
+	display: inline !important;
+	width: 90% !important;
+}
+div.ui-content {
+	min-height: 324px;
+}
